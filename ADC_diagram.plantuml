@@ -1,42 +1,56 @@
-@startuml
- node STM32F4Discovery
- node ADC
- node DMA
- artifact "ADC_Especifications" <<Especifications>>  {
- top to bottom direction
- rectangle "16_External_Channels"
- rectangle "3 Internal Channels"
- }
- folder ADC_PINS[
- Descriptions of <b>ADC Pins
- ====
- Channel 0  --> PIN A0   ||| ADC123
- Channel 1  --> PIN A1   ||| ADC123
- Channel 2  --> PIN A2   ||| ADC123
- Channel 3  --> PIN A3   ||| ADC123
- Channel 4  --> PIN A4   ||| ADC12
- Channel 5  --> PIN A5   ||| ADC12
- Channel 6  --> PIN A6   ||| ADC12
- Channel 7  --> PIN A7   ||| ADC12
- Channel 8  --> PIN B0   ||| ADC12
- Channel 9  --> PIN B1   ||| ADC12
- Channel 10 -->PIN C0   ||| ADC123
- Channel 11 --> PIN C1  ||| ADC123
- Channel 12 --> PIN C2  ||| ADC123
- Channel 13 --> PIN C3  ||| ADC123
- Channel 14 --> PIN C4  ||| ADC12
- Channel 15 --> PIN C5  ||| ADC12
- ]
- 
- top to bottom direction
- STM32F4Discovery --> ADC
- left to right direction
- ADC -> ADC_Especifications
- 16_External_Channels --> ADC_PINS
- ADC -> DMA
- note right of DMA
- Direct Acces Memory	can be
- configuring to use with ADC
- ADC output registers --> RAM variable
- end note
- @enduml
+ * @startuml
+ * node STM32F4Discovery
+ * node ADC
+ * node DMA
+ * artifact "ADC_Especifications" <<Especifications>>  {
+ * top to bottom direction
+ * rectangle "16_External_Channels"
+ * rectangle "3_Internal_Channels"
+ * rectangle "Max. resolution: 12bits \nor configurable 10-8-6 bits"
+ * }
+ * folder ADC_PINS[
+ * Descriptions of <b>External ADC Pins
+ * ====
+ * Channel 0  --> PIN A0   ||| ADC123
+ * Channel 1  --> PIN A1   ||| ADC123
+ * Channel 2  --> PIN A2   ||| ADC123
+ * Channel 3  --> PIN A3   ||| ADC123
+ * Channel 4  --> PIN A4   ||| ADC12
+ * Channel 5  --> PIN A5   ||| ADC12
+ * Channel 6  --> PIN A6   ||| ADC12
+ * Channel 7  --> PIN A7   ||| ADC12
+ * Channel 8  --> PIN B0   ||| ADC12
+ * Channel 9  --> PIN B1   ||| ADC12
+ * Channel 10 -->PIN C0   ||| ADC123
+ * Channel 11 --> PIN C1  ||| ADC123
+ * Channel 12 --> PIN C2  ||| ADC123
+ * Channel 13 --> PIN C3  ||| ADC123
+ * Channel 14 --> PIN C4  ||| ADC12
+ * Channel 15 --> PIN C5  ||| ADC12
+ * ]
+ *
+ * folder ADC_PINS_intr[
+ * Descriptions of <b>Internal ADC Pins
+ * ====
+ * Channel 16  --> Temperature sensor ||ADC1
+ * Channel 17  --> Internal Reference Voltage || ADC1
+ * Channel 18 -->  Battery Voltage || ADC1
+ * ]
+ * top to bottom direction
+ * STM32F4Discovery --> ADC
+ * left to right direction
+ * ADC -> ADC_Especifications
+ * 16_External_Channels --> ADC_PINS
+ * 3_Internal_Channels --> ADC_PINS_intr
+ * ADC -> DMA
+ * note right of DMA
+ * 	Direct Acces Memory	can be
+ * 	configuring to use with ADC
+ * 	<b>ADC output registers --> RAM variable
+ * end note
+ * note top of ADC_Especifications
+ * FOR THIS ESPECIFIC CASE WE'LL USE 8 ADC CHANNELS
+ * From Channel 0 to Channel 7 and Data transaltion will be
+ * By DMA, From Peripheral to Memory
+ * end note
+ * @enduml
